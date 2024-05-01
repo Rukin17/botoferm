@@ -1,9 +1,9 @@
 import datetime
 import enum
+from typing import Optional
 import uuid
 
-from sqlalchemy import TIMESTAMP
-# from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import TIMESTAMP, Float, null
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column
 
 
@@ -28,10 +28,10 @@ class User(Base):
     created_ad: Mapped[datetime.date] = mapped_column(TIMESTAMP, default=datetime.date.today())
     login: Mapped[str] = mapped_column(unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-    project_id: Mapped[uuid.UUID] = mapped_column()
+    project_id: Mapped[uuid.UUID]
     env: Mapped[EnvStatus]
     domain: Mapped[TypeUser]
-    locktime: Mapped[datetime.datetime | None] = mapped_column(TIMESTAMP, default=None)
+    locktime: Mapped[Optional[float]] = mapped_column(nullable=True, default=None)
     
     def __repr__(self):
         return f'id {self.id}, login {self.login}'

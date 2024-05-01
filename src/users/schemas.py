@@ -3,7 +3,7 @@ import uuid
 from uuid import UUID
 
 from users.models import EnvStatus, TypeUser
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, EmailStr
 
 
 class UserCreate(BaseModel):
@@ -24,12 +24,5 @@ class ShowUser(BaseModel):
     env: EnvStatus
     domain: TypeUser
 
-
-# class Users(ShowUser):
-#     model_config = ConfigDict(from_attributes=True)
-
-
-# class Product(ProductBase):
-#     model_config = ConfigDict(from_attributes=True)
-
-#     id: int
+    class Config:
+        from_attributes = True

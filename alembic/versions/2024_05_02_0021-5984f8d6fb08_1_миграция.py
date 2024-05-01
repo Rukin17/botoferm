@@ -1,18 +1,18 @@
-"""1 migration
+"""1  миграция
 
-Revision ID: 5755de6d2f50
+Revision ID: 5984f8d6fb08
 Revises: 
-Create Date: 2024-04-29 14:35:31.357413
+Create Date: 2024-05-02 00:21:09.621723
 
 """
 from typing import Sequence, Union
 
+from alembic import op
 import sqlalchemy as sa
 
-from alembic import op
 
 # revision identifiers, used by Alembic.
-revision: str = '5755de6d2f50'
+revision: str = '5984f8d6fb08'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -28,7 +28,6 @@ def upgrade() -> None:
     sa.Column('project_id', sa.Uuid(), nullable=False),
     sa.Column('env', sa.Enum('PROD', 'PREPROD', 'STAGE', name='envstatus'), nullable=False),
     sa.Column('domain', sa.Enum('CANARY', 'REGULAR', name='typeuser'), nullable=False),
-    sa.Column('locktime', sa.TIMESTAMP(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('login')
     )
