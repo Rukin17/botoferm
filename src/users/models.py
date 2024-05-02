@@ -3,7 +3,7 @@ import enum
 from typing import Optional
 import uuid
 
-from sqlalchemy import TIMESTAMP, Float, null
+from sqlalchemy import TIMESTAMP
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column
 
 
@@ -32,6 +32,6 @@ class User(Base):
     env: Mapped[EnvStatus]
     domain: Mapped[TypeUser]
     locktime: Mapped[Optional[float]] = mapped_column(nullable=True, default=None)
-    
+
     def __repr__(self):
         return f'id {self.id}, login {self.login}'

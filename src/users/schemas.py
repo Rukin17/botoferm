@@ -1,8 +1,6 @@
-import datetime
 import uuid
-from uuid import UUID
 
-from users.models import EnvStatus, TypeUser
+from src.users.models import EnvStatus, TypeUser
 from pydantic import BaseModel, EmailStr
 
 

@@ -1,14 +1,13 @@
 import datetime
-import time
 from typing import Union
 from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-from users.schemas import ShowUser
-from users.hashing import Hasher
-from users.models import EnvStatus, TypeUser, User
+from src.users.schemas import ShowUser
+from src.users.hashing import Hasher
+from src.users.models import EnvStatus, TypeUser, User
 
 
 async def create_user(
@@ -18,7 +17,7 @@ async def create_user(
         env: EnvStatus,
         domain: TypeUser,
         db: AsyncSession
-) -> User:
+) -> User | None:
     hashed_password = Hasher.get_password_hash(password)
     db_user = User(
         login=login,
@@ -46,6 +45,7 @@ async def get_user_by_id(user_id: UUID, db: AsyncSession,) -> Union[User, None]:
     if user_row:
         return user_row[0]
     return None
+
 
 # TODO datetime..!
 async def put_locktime(user: User, db: AsyncSession) -> User:
