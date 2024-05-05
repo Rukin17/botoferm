@@ -5,7 +5,7 @@ import uuid
 
 from sqlalchemy import TIMESTAMP
 from sqlalchemy.orm import Mapped, declarative_base, mapped_column
-
+from src.db import metadata
 
 Base = declarative_base()
 

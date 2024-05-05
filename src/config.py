@@ -9,11 +9,13 @@ load_dotenv()
 @dataclass
 class Config:
     async_db_url: str
+    test_db_url: str
 
 
 def load():
     return Config(
-        async_db_url=os.environ['SQLALCHEMY_ASYNC_DATABASE_URL']
+        async_db_url=os.environ['SQLALCHEMY_ASYNC_DATABASE_URL'],
+        test_db_url=os.environ['TEST_DATABASE_URL']
     )
 
 
