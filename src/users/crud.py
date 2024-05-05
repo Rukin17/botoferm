@@ -17,7 +17,7 @@ async def create_user(
         env: EnvStatus,
         domain: TypeUser,
         db: AsyncSession
-) -> User | None:
+) -> Union[User, None]:
     hashed_password = Hasher.get_password_hash(password)
     db_user = User(
         login=login,

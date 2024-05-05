@@ -17,7 +17,7 @@ from src.db import get_db
 user_router = APIRouter(tags=['User'])
 
 
-@user_router.post('/', response_model=UserCreate)
+@user_router.post('/create', response_model=UserCreate)
 async def create_new_user(
         login: EmailStr,
         password: str,
@@ -37,7 +37,7 @@ async def create_new_user(
     return new_user
 
 
-@user_router.get('/all_users', response_model=list[ShowUser])
+@user_router.get('/get_all', response_model=list[ShowUser])
 async def get_all_users(db: AsyncSession = Depends(get_db)) -> list[ShowUser]:
     users = await get_users(db=db)
     return users
@@ -47,7 +47,7 @@ async def get_all_users(db: AsyncSession = Depends(get_db)) -> list[ShowUser]:
 async def acquire_lock(user_id: UUID, db: AsyncSession = Depends(get_db)) -> ShowUser:
     current_user = await get_user_by_id(user_id=user_id, db=db)
     if not current_user:
-        raise HTTPException(status_code=404, detail=("User doesn't exists"))
+        raise HTTPException(status_code=404, detail=("User not found"))
 
     if current_user.locktime:
         raise HTTPException(status_code=423, detail=("User has already been issued"))
@@ -60,6 +60,6 @@ async def acquire_lock(user_id: UUID, db: AsyncSession = Depends(get_db)) -> Sho
 async def release_lock(user_id: UUID, db: AsyncSession = Depends(get_db)) -> ShowUser:
     current_user = await get_user_by_id(user_id=user_id, db=db)
     if not current_user:
-        raise HTTPException(status_code=404, detail=("User dosen't exists"))
+        raise HTTPException(status_code=404, detail=("User not found"))
     released_user = await reset_locktime(user=current_user, db=db)
     return released_user
